@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="rent">Alugar</string>
+    <string name="watch">Assistir</string>
+    <string name="movie_scene">Movie Scene</string>
+    <string name="movie_date">06/07/1994</string>
+    <string name="movie_title">Forrest Gump</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="subtitles">Legendas</string>
+    <string name="audio">Áudio</string>
+    <string name="rating">Rating</string>
+    <string name="copy_paste">Copiar</string>
+    <string name="recommend">80% recomendam</string>
+    <string name="category">Categoria</string>
+    <string name="ratings">Avaliações</string>
+    <string name="similarity">Similares</string>
+    <string name="movie_sinopsis">Quarenta anos da história dos Estados Unidos, vistos pelos olhos de Forrest Gump (Tom Hanks), um rapaz com QI abaixo da média e boas intenções. Por obra do acaso, ele consegue participar de momentos cruciais, como a Guerra do Vietnã e Watergate, mas continua pensando no seu amor de infância, Jenny Curran.</string>
+</resources>
