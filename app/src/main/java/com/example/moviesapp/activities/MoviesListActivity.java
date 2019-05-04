@@ -1,7 +1,9 @@
-package com.example.moviesapp;
+package com.example.moviesapp.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.moviesapp.R;
 
 public class MoviesListActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.moviesapp.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +9,8 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.moviesapp.R;
 
 public class WatchActivity extends AppCompatActivity {
     @Override
