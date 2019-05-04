@@ -1,6 +1,8 @@
 package com.example.moviesapp.repositories;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
     private String scene;
     private String poster;
     private String title;
