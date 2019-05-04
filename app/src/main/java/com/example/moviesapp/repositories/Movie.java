@@ -3,13 +3,13 @@ package com.example.moviesapp.repositories;
 import java.io.Serializable;
 
 public class Movie implements Serializable {
-    private String scene;
-    private String poster;
+    private Integer scene;
+    private Integer poster;
     private String title;
     private String date;
     private String sinopsis;
 
-    public Movie(String scene, String poster, String title, String date, String sinopsis) {
+    public Movie(Integer scene, Integer poster, String title, String date, String sinopsis) {
         this.scene = scene;
         this.poster = poster;
         this.title = title;
@@ -17,11 +17,11 @@ public class Movie implements Serializable {
         this.sinopsis = sinopsis;
     }
 
-    public String getScene() {
+    public Integer getScene() {
         return scene;
     }
 
-    public String getPoster() {
+    public Integer getPoster() {
         return poster;
     }
 

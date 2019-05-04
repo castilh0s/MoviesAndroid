@@ -9,14 +9,28 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.moviesapp.R;
+import com.example.moviesapp.repositories.Movie;
 
 public class WatchActivity extends AppCompatActivity {
+    TextView textViewTitle;
+    ImageView imageViewScene;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch);
+
+        textViewTitle = findViewById(R.id.movieTitleText);
+        imageViewScene = findViewById(R.id.sceneImage);
+
+        Bundle data = getIntent().getExtras();
+        final Movie movie = (Movie) data.getSerializable("MOVIE");
+
+        imageViewScene.setImageResource(movie.getScene());
+        textViewTitle.setText(movie.getTitle());
     }
 
     @Override
