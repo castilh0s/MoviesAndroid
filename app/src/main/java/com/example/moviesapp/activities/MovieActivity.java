@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.moviesapp.R;
+import com.example.moviesapp.models.Movie;
 //import com.example.moviesapp.repositories.Movie;
 
 public class MovieActivity extends AppCompatActivity {
@@ -29,17 +30,16 @@ public class MovieActivity extends AppCompatActivity {
         textViewDate = findViewById(R.id.dateText);
         textViewSinopsis = findViewById(R.id.sinopsisText);
         imageViewPoster = findViewById(R.id.posterImage);
-        imageViewScene = findViewById(R.id.sceneImage);
-        buttonWatch = findViewById(R.id.watchButton);
 
         Bundle data = getIntent().getExtras();
-//        final Movie movie = (Movie) data.getSerializable("MOVIE");
+        final Movie movie = (Movie) data.getSerializable("MOVIE");
+
+        textViewTitle.setText(movie.getTitle());
+        textViewDate.setText(movie.getReleaseDate());
+        textViewSinopsis.setText(movie.getOverview());
 //
 //        imageViewPoster.setImageResource(movie.getPoster());
 //        imageViewScene.setImageResource(movie.getScene());
-//        textViewTitle.setText(movie.getTitle());
-//        textViewDate.setText(movie.getDate());
-//        textViewSinopsis.setText(movie.getSinopsis());
 
 //        buttonWatch.setOnClickListener(
 //                new View.OnClickListener() {
