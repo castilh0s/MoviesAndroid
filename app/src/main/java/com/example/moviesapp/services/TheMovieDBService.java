@@ -7,6 +7,7 @@ import com.example.moviesapp.models.MoviesList;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface TheMovieDBService {
     String API_KEY = "11518df004464f136f1ea9018d4db6d1";
@@ -15,7 +16,7 @@ public interface TheMovieDBService {
     Call<MoviesList> listMovies();
 
     @GET("/search/movie?query={movie}&api_key=" + API_KEY)
-    Call<MoviesList> searchMovie(@Path("movie") String movie);
+    Call<MoviesList> searchMovie(@Query("movie") String movie);
 
     @GET("/genre/movie/list?api_key=" + API_KEY)
     Call<GenreList> getGenreList();
