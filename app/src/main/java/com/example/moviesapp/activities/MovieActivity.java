@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.moviesapp.R;
-import com.example.moviesapp.repositories.Movie;
+//import com.example.moviesapp.repositories.Movie;
 
 public class MovieActivity extends AppCompatActivity {
 
@@ -33,24 +33,24 @@ public class MovieActivity extends AppCompatActivity {
         buttonWatch = findViewById(R.id.watchButton);
 
         Bundle data = getIntent().getExtras();
-        final Movie movie = (Movie) data.getSerializable("MOVIE");
+//        final Movie movie = (Movie) data.getSerializable("MOVIE");
+//
+//        imageViewPoster.setImageResource(movie.getPoster());
+//        imageViewScene.setImageResource(movie.getScene());
+//        textViewTitle.setText(movie.getTitle());
+//        textViewDate.setText(movie.getDate());
+//        textViewSinopsis.setText(movie.getSinopsis());
 
-        imageViewPoster.setImageResource(movie.getPoster());
-        imageViewScene.setImageResource(movie.getScene());
-        textViewTitle.setText(movie.getTitle());
-        textViewDate.setText(movie.getDate());
-        textViewSinopsis.setText(movie.getSinopsis());
-
-        buttonWatch.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent watchIntent = new Intent(getApplicationContext(), WatchActivity.class);
-
-                        watchIntent.putExtra("MOVIE", movie);
-                        startActivity(watchIntent);
-                    }
-                }
-        );
+//        buttonWatch.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent watchIntent = new Intent(getApplicationContext(), WatchActivity.class);
+//
+//                        watchIntent.putExtra("MOVIE", movie);
+//                        startActivity(watchIntent);
+//                    }
+//                }
+//        );
     }
 }

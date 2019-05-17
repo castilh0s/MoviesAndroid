@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.moviesapp.R;
-import com.example.moviesapp.repositories.Movie;
+//import com.example.moviesapp.repositories.Movie;
 
 public class WatchActivity extends AppCompatActivity {
     TextView textViewTitle;
@@ -27,10 +27,10 @@ public class WatchActivity extends AppCompatActivity {
         imageViewScene = findViewById(R.id.sceneImage);
 
         Bundle data = getIntent().getExtras();
-        final Movie movie = (Movie) data.getSerializable("MOVIE");
+//        final Movie movie = (Movie) data.getSerializable("MOVIE");
 
-        imageViewScene.setImageResource(movie.getScene());
-        textViewTitle.setText(movie.getTitle());
+//        imageViewScene.setImageResource(movie.getScene());
+//        textViewTitle.setText(movie.getTitle());
     }
 
     @Override
