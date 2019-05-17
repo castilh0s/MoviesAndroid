@@ -1,16 +1,13 @@
 package com.example.moviesapp.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.moviesapp.R;
 import com.example.moviesapp.models.Movie;
-//import com.example.moviesapp.repositories.Movie;
+import com.squareup.picasso.Picasso;
 
 public class MovieActivity extends AppCompatActivity {
 
@@ -18,8 +15,6 @@ public class MovieActivity extends AppCompatActivity {
     TextView textViewDate;
     TextView textViewSinopsis;
     ImageView imageViewPoster;
-    ImageView imageViewScene;
-    Button buttonWatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +32,6 @@ public class MovieActivity extends AppCompatActivity {
         textViewTitle.setText(movie.getTitle());
         textViewDate.setText(movie.getReleaseDate());
         textViewSinopsis.setText(movie.getOverview());
-//
-//        imageViewPoster.setImageResource(movie.getPoster());
-//        imageViewScene.setImageResource(movie.getScene());
-
-//        buttonWatch.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent watchIntent = new Intent(getApplicationContext(), WatchActivity.class);
-//
-//                        watchIntent.putExtra("MOVIE", movie);
-//                        startActivity(watchIntent);
-//                    }
-//                }
-//        );
+        Picasso.get().load("https://image.tmdb.org/t/p/w600_and_h900_bestv2/" + movie.getPosterPath()).into(imageViewPoster);
     }
 }
