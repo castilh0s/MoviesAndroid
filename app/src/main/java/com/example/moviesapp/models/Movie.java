@@ -1,10 +1,11 @@
-package com.example.moviesapp.services.models;
+package com.example.moviesapp.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Movie {
+public class Movie implements Serializable {
     @SerializedName("vote_count")
     private Integer voteCount;
 
@@ -47,8 +48,7 @@ public class Movie {
     public Movie(Integer voteCount, Integer id, boolean video, Double voteAverage, String title,
                  Double popularity, String posterPath, String originalLanguage,
                  List<Integer> genreIds, String backdropPath, boolean adult, String overview,
-                 String releaseDate)
-    {
+                 String releaseDate) {
         this.voteCount = voteCount;
         this.id = id;
         this.video = video;
