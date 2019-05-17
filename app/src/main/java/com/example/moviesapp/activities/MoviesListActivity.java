@@ -8,6 +8,13 @@ import android.widget.Button;
 
 import com.example.moviesapp.R;
 import com.example.moviesapp.repositories.Movie;
+import com.example.moviesapp.services.TheMovieDB;
+import com.example.moviesapp.services.TheMovieDBService;
+import com.example.moviesapp.services.models.MoviesList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MoviesListActivity extends AppCompatActivity {
 
@@ -19,6 +26,23 @@ public class MoviesListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies_list);
+
+        TheMovieDBService service = TheMovieDB.getRetrofit().create(TheMovieDBService.class);
+
+        service.listMovies().enqueue(new Callback<MoviesList>() {
+            @Override
+            public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
+                MoviesList moviesLists = response.body();
+                // tive que colocar o pacote na frente pq aqui ja ta sendo usada outra classe Movie
+                // aquela dentro de repositories... Ai tem que fazer um adapter pra listar os filmes
+                com.example.moviesapp.services.models.Movie movie = moviesLists.getResults().get(1);
+            }
+
+            @Override
+            public void onFailure(Call<MoviesList> call, Throwable t) {
+                System.out.println("deu erro ai");
+            }
+        });
 
         final Intent movieIntent = new Intent(
                 getApplicationContext(),
