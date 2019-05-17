@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.example.moviesapp.R;
+import com.example.moviesapp.RecyclerItemClickListener;
 import com.example.moviesapp.adapter.MoviesAdapter;
 import com.example.moviesapp.models.Movie;
 import com.example.moviesapp.models.MoviesList;
@@ -33,6 +35,11 @@ public class MoviesListActivity extends AppCompatActivity {
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
         recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        final Intent movieIntent = new Intent(
+                getApplicationContext(),
+                MovieActivity.class
+        );
+
         TheMovieDBService apiService = TheMovieDB.getRetrofit().create(TheMovieDBService.class);
 
         Call<MoviesList> call = apiService.listMovies();
@@ -40,9 +47,40 @@ public class MoviesListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
                 Integer statusCode = response.code();
-                List<Movie> movies = response.body().getResults();
+                final List<Movie> movies = response.body().getResults();
 
                 recyclerViewMovies.setAdapter(new MoviesAdapter(movies, R.layout.adapter_movie, getApplicationContext()));
+                recyclerViewMovies.addOnItemTouchListener(
+                        new RecyclerItemClickListener(
+                                getApplicationContext(),
+                                recyclerViewMovies,
+                                new RecyclerItemClickListener.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        Movie movie = movies.get(position);
+
+                                        movieIntent.putExtra("MOVIE", movie);
+                                        startActivity(movieIntent);
+                                    }
+
+                                    @Override
+                                    public void onLongItemClick(View view, int position) {
+                                        Movie movie = movies.get(position);
+
+                                        movieIntent.putExtra("MOVIE", movie);
+                                        startActivity(movieIntent);
+                                    }
+
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Movie movie = movies.get(position);
+
+                                        movieIntent.putExtra("MOVIE", movie);
+                                        startActivity(movieIntent);
+                                    }
+                                }
+                        )
+                );
             }
 
             @Override
@@ -51,29 +89,5 @@ public class MoviesListActivity extends AppCompatActivity {
 
             }
         });
-
-        final Intent movieIntent = new Intent(
-                getApplicationContext(),
-                MovieActivity.class
-        );
-
-
-//        buttonIronMan.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Movie ironMan = new Movie(
-//                                R.mipmap.iron_man_scene_foreground,
-//                                R.mipmap.iron_man_poster_foreground,
-//                                "Iron Man",
-//                                "30/04/2008",
-//                                "Tony Stark (Robert Downey Jr.) é um industrial bilionário, que também é um brilhante inventor. Ao ser sequestrado ele é obrigado por terroristas a construir uma arma devastadora mas, ao invés disto, constrói uma armadura de alta tecnologia que permite que fuja de seu cativeiro. A partir de então ele passa a usá-la para combater o crime, sob o alter-ego do Homem de Ferro."
-//                        );
-//
-//                        movieIntent.putExtra("MOVIE", ironMan);
-//                        startActivity(movieIntent);
-//                    }
-//                }
-//        );
     }
 }
