@@ -20,8 +20,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     private int rowLayout;
     private Context context;
 
-    public MoviesAdapter(List<Movie> movies, int rowLayout, Context context) {
-        this.movies = movies;
+    public MoviesAdapter(int rowLayout, Context context) {
         this.rowLayout = rowLayout;
         this.context = context;
     }
@@ -52,6 +51,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     @Override
     public int getItemCount() {
         return movies.size();
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public void filterList(List<Movie> movies) {
+        this.movies = movies;
+        notifyDataSetChanged();
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
