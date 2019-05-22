@@ -43,8 +43,13 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
     public void onBindViewHolder(@NonNull CrewViewHolder CrewViewHolder, int i) {
         Crew crew = crewList.get(i);
 
-        Picasso.get().load("https://image.tmdb.org/t/p/w300_and_h300_bestv2/" + crew.getProfilePath()).into(CrewViewHolder.personImage);
+        if (crew.getProfilePath() != null)
+            Picasso.get().load("https://image.tmdb.org/t/p/w300_and_h300_bestv2/" + crew.getProfilePath()).into(CrewViewHolder.personImage);
+        else
+            Picasso.get().load("http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg").into(CrewViewHolder.personImage);
+
         CrewViewHolder.name.setText(crew.getName());
+        CrewViewHolder.role.setText(crew.getDepartment());
     }
 
     @Override
@@ -54,11 +59,13 @@ public class CrewAdapter extends RecyclerView.Adapter<CrewAdapter.CrewViewHolder
 
     public static class CrewViewHolder extends RecyclerView.ViewHolder {
         TextView name;
+        TextView role;
         ImageView personImage;
 
         public CrewViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.nameTextView);
+            role = itemView.findViewById(R.id.roleTextView);
             personImage = itemView.findViewById(R.id.personImageView);
         }
     }

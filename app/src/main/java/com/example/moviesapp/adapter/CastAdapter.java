@@ -43,17 +43,13 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
     public void onBindViewHolder(@NonNull CastViewHolder castViewHolder, int i) {
         Cast cast = castList.get(i);
 
-        System.out.println("Profile Path: " + cast.getProfilePath());
-
-        if (cast.getProfilePath() != null) {
-            System.out.println("Diferente de null");
+        if (cast.getProfilePath() != null)
             Picasso.get().load("https://image.tmdb.org/t/p/w300_and_h300_bestv2/" + cast.getProfilePath()).into(castViewHolder.personImage);
-        } else {
-            System.out.println("Igual a null");
+        else
             Picasso.get().load("http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg").into(castViewHolder.personImage);
-        }
 
         castViewHolder.name.setText(cast.getName());
+        castViewHolder.role.setText(cast.getCharacter());
     }
 
     @Override
@@ -63,11 +59,13 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     public static class CastViewHolder extends RecyclerView.ViewHolder{
         TextView name;
+        TextView role;
         ImageView personImage;
 
         public CastViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.nameTextView);
+            role = itemView.findViewById(R.id.roleTextView);
             personImage = itemView.findViewById(R.id.personImageView);
         }
     }
