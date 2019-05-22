@@ -33,6 +33,8 @@ public class MoviesListActivity extends AppCompatActivity {
     private EditText searchMovie;
     private MoviesAdapter moviesAdapter;
     private TheMovieDBService apiService;
+    private Intent movieIntent;
+    private RecyclerItemClickListener recyclerItemClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +45,19 @@ public class MoviesListActivity extends AppCompatActivity {
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
         recyclerViewMovies.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         moviesAdapter = new MoviesAdapter(R.layout.adapter_movie, getApplicationContext());
-
-        final Intent movieIntent = new Intent(
+        movieIntent = new Intent(
                 getApplicationContext(),
                 MovieActivity.class
         );
 
+        loadDefaultMoviesList();
+        searchMovie.addTextChangedListener(getWatcher());
+    }
+
+    private void loadDefaultMoviesList() {
         apiService = TheMovieDB.getRetrofit().create(TheMovieDBService.class);
         final Call<MoviesList> call = apiService.listMovies();
         call.enqueue(getCallbackSetMovieIntent(movieIntent));
-
-        searchMovie.addTextChangedListener(getWatcher());
     }
 
     private TextWatcher getWatcher() {
@@ -70,18 +74,25 @@ public class MoviesListActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString());
+                String searchInput = s.toString();
+                filter(searchInput);
             }
         };
     }
 
     private void filter(String text) {
+        if (text == null || text.isEmpty()) {
+            loadDefaultMoviesList();
+            return;
+        }
+
         Call<MoviesList> moviesList = apiService.searchMovie(text);
         moviesList.enqueue(new Callback<MoviesList>() {
             @Override
             public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
                 List<Movie> movies = response.body().getResults();
                 moviesAdapter.filterList(movies);
+                clickMovieListener(movies, movieIntent);
             }
 
             @Override
@@ -100,37 +111,7 @@ public class MoviesListActivity extends AppCompatActivity {
 
                 recyclerViewMovies.setAdapter(moviesAdapter);
                 moviesAdapter.setMovies(movies);
-                recyclerViewMovies.addOnItemTouchListener(
-                        new RecyclerItemClickListener(
-                                getApplicationContext(),
-                                recyclerViewMovies,
-                                new RecyclerItemClickListener.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, int position) {
-                                        Movie movie = movies.get(position);
-
-                                        movieIntent.putExtra("MOVIE", movie);
-                                        startActivity(movieIntent);
-                                    }
-
-                                    @Override
-                                    public void onLongItemClick(View view, int position) {
-                                        Movie movie = movies.get(position);
-
-                                        movieIntent.putExtra("MOVIE", movie);
-                                        startActivity(movieIntent);
-                                    }
-
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        Movie movie = movies.get(position);
-
-                                        movieIntent.putExtra("MOVIE", movie);
-                                        startActivity(movieIntent);
-                                    }
-                                }
-                        )
-                );
+                clickMovieListener(movies, movieIntent);
             }
 
             @Override
@@ -138,5 +119,44 @@ public class MoviesListActivity extends AppCompatActivity {
                 Log.e(TAG, t.toString());
             }
         };
+    }
+
+    private void clickMovieListener(final List<Movie> movies, final Intent movieIntent) {
+        recyclerItemClickListener = recyclerItemMovies(movies, movieIntent);
+        recyclerViewMovies.addOnItemTouchListener(recyclerItemClickListener);
+    }
+
+    private RecyclerItemClickListener recyclerItemMovies(final List<Movie> movies, final Intent movieIntent) {
+        recyclerViewMovies.removeOnItemTouchListener(recyclerItemClickListener);
+
+        return new RecyclerItemClickListener(
+                getApplicationContext(),
+                recyclerViewMovies,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Movie movie = movies.get(position);
+
+                        movieIntent.putExtra("MOVIE", movie);
+                        startActivity(movieIntent);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Movie movie = movies.get(position);
+
+                        movieIntent.putExtra("MOVIE", movie);
+                        startActivity(movieIntent);
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Movie movie = movies.get(position);
+
+                        movieIntent.putExtra("MOVIE", movie);
+                        startActivity(movieIntent);
+                    }
+                }
+        );
     }
 }
